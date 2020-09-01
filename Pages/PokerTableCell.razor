@@ -1,0 +1,28 @@
+@page "/pokertablecell"
+
+@using Poker_Counter.Data
+@using System;
+@using System.Collections.Generic;
+
+@if (isEditing) {
+    //<input @onkeydown="StopEdit" type='text' value='@Value' />
+    <td><div @onkeydown="StopEdit" contenteditable>@Value</div></td>
+}
+else {
+    <th @onclick="@(e => Edit())">@Value</th>   
+}
+
+@code {
+     [Parameter]
+    public string Value { get; set; } 
+    bool isEditing;
+
+    private void Edit() {
+        isEditing = true;
+    }
+    private void StopEdit(KeyboardEventArgs e) {
+        if (e.Key == "Enter") {
+            isEditing = false;
+        }
+    }   
+}

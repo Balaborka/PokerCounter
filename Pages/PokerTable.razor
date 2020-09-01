@@ -1,0 +1,82 @@
+@page "/pokertable"
+
+@using Poker_Counter.Data
+@using System;
+@using System.Collections.Generic;
+
+<button class="btn btn-primary" @onclick="AddPlayer">+</button>
+
+<table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                @foreach (var player in players) {
+                    <th>#</th>
+                    <th><div contenteditable>@player.Name</div></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < rowCount; i++) {
+                <tr>
+                    <th>@(i + 1)</th>
+                    @foreach (var player in players) {
+                        <td><div contenteditable>@player.Order</div></td>
+                        <td><div contenteditable>@player.Name</div></td>
+                    }
+                </tr>
+            }
+            @for (int i = 0; i < players.Count() - 2; i++) {
+                 <tr>
+                    <th>@(rowCount)</th>
+                    @foreach (var player in players) {
+                        <td><div contenteditable>@player.Order</div></td>
+                        <td><div contenteditable>@player.Name</div></td>
+                    }
+                </tr>
+            }
+            @for (int i = 0; i < rowCount; i++) {
+                <tr>
+                    <th>@(rowCount - i)</th>
+                    @foreach (var player in players) {
+                        <td><div contenteditable>@player.Order</div></td>
+                        <td><div contenteditable>@player.Name</div></td>
+                    }
+                </tr>
+            }
+            
+        </tbody>
+</table>
+
+@code {
+    private int rowCount;
+    private List<Player> players;
+
+    protected override void OnInitialized()
+    {
+        players = new List<Player>(){
+            new Player() { Name = "Name 1" },
+            new Player() { Name = "Name 2" },
+            new Player() { Name = "Name 3" },
+            new Player() { Name = "Name 4" }
+        };
+        rowCount = Convert.ToInt32(Math.Floor(Convert.ToDouble(54 / players.Count)));
+    }
+
+    private void AddPlayer() {
+        players.Add(new Player() { Name = "Name " + (players.Count() + 1) });
+        rowCount = Convert.ToInt32(Math.Floor(Convert.ToDouble(54 / players.Count)));
+    }
+
+    //private void CreateCustomRows(string gameType) {
+        //for (int i = 0; i < 2; i++) {
+          //  <tr>
+            //    <th>@(gameType)</th>
+              //  @foreach (var player in players) {
+                //    <td><div contenteditable>@player.Order</div></td>
+                  //  <td><div contenteditable>@player.Name</div></td>
+                //}
+            //</tr>
+    //    }
+    //}
+}
