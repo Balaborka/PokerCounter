@@ -12,6 +12,7 @@
                 <th></th>
                 @foreach (var player in players) {
                     <th>#</th>
+                    <th>#</th>
                     <th><div contenteditable>@player.Name</div></th>
                 }
             </tr>
@@ -21,7 +22,10 @@
                 <tr>
                     <th>@(i + 1)</th>
                     @foreach (var player in players) {
-                        <td><div contenteditable>@player.Rounds[i].Order</div></td>
+                        //<td><div contenteditable>@player.Rounds[i].Order</div></td>
+                        //<td><div contenteditable>@player.Rounds[i].CurrentSummary</div></td>
+                        <td><input style="width:25px;" @bind="player.Rounds[i].Order" /></td>
+                        <td><input style="width:25px;" @bind="player.Rounds[i].Trick" /></td>
                         <td><div contenteditable>@player.Rounds[i].CurrentSummary</div></td>
                     }
                 </tr>
@@ -30,7 +34,10 @@
                  <tr>
                     <th>@(rowCount)</th>
                     @foreach (var player in players) {
-                        <td><div contenteditable>@player.Rounds[i].Order</div></td>
+                        //<td><div contenteditable>@player.Rounds[i].Order</div></td>
+                        //<td><div contenteditable>@player.Rounds[i].CurrentSummary</div></td>
+                        <td><input style="width:25px;" @bind="player.Rounds[i].Order" /></td>
+                        <td><input style="width:25px;" @bind="player.Rounds[i].Trick" /></td>
                         <td><div contenteditable>@player.Rounds[i].CurrentSummary</div></td>
                     }
                 </tr>
@@ -39,8 +46,11 @@
                 <tr>
                     <th>@(rowCount - i)</th>
                     @foreach (var player in players) {
-                        <td><div contenteditable>@player.Rounds[i].Order</div></td>
-                        <td><div contenteditable>@player.Rounds[i].CurrentSummary</div></td>                    }
+                        //<td><div contenteditable>@player.Rounds[i].Order</div></td>
+                        //<td><div contenteditable>@player.Rounds[i].CurrentSummary</div></td> 
+                        <td><input style="width:25px;" @bind="player.Rounds[i].Order" /></td>
+                        <td><input style="width:25px;" @bind="player.Rounds[i].Trick" /></td>
+                        <td><div contenteditable>@player.Rounds[i].CurrentSummary</div></td>                   }
                 </tr>
             }
             

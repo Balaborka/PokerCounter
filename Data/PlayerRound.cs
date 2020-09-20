@@ -4,10 +4,17 @@ namespace Poker_Counter.Data
 {
     public class PlayerRound
     {
-        public int CurrentSummary { get { return curSum + Result; } set { } }
+        public int CurrentSummary { get; set; }
         public Round RoundName { get; set; }
-        public int Order { get; set; }
-        public int Trick { get; set; }
+        int order;
+        public int Order { get => order;  set {
+                order = value;    
+        } }
+        int trick;
+        public int Trick { get => trick; set {
+            trick = value;
+            CurrentSummary = curSum + Result;
+        } }
         public int Result
         {
             get {
