@@ -13,53 +13,44 @@
                 @foreach (var player in players) {
                     <th>#</th>
                     <th>#</th>
-                    <th><div contenteditable>@player.Name</div></th>
+                    <td><input class="@CssClass" @bind="player.Name" /></td>
                 }
             </tr>
         </thead>
         <tbody>
-            @for (int i = 0; i < rowCount; i++) {
+            @foreach (var round in players.First().Rounds) {
                 <tr>
-                    <th>@(i + 1)</th>
+                    <th>@round.MaxOrder</th>
                     @foreach (var player in players) {
-                        //<td><div contenteditable>@player.Rounds[i].Order</div></td>
-                        //<td><div contenteditable>@player.Rounds[i].CurrentSummary</div></td>
-                        <td><input style="width:25px;" @bind="player.Rounds[i].Order" /></td>
-                        <td><input style="width:25px;" @bind="player.Rounds[i].Trick" /></td>
-                        <td><div contenteditable>@player.Rounds[i].CurrentSummary</div></td>
+                        <td><input class="@CssClass" @bind="round.Order" /></td>
+                        <td><input class="@CssClass" @bind="round.Trick" /></td>
+                        <td><input class="@CssClass" @bind="round.Score" readonly="True" /></td>
                     }
                 </tr>
             }
-            @for (int i = 0; i < players.Count() - 2; i++) {
-                 <tr>
-                    <th>@(rowCount)</th>
-                    @foreach (var player in players) {
-                        //<td><div contenteditable>@player.Rounds[i].Order</div></td>
-                        //<td><div contenteditable>@player.Rounds[i].CurrentSummary</div></td>
-                        <td><input style="width:25px;" @bind="player.Rounds[i].Order" /></td>
-                        <td><input style="width:25px;" @bind="player.Rounds[i].Trick" /></td>
-                        <td><div contenteditable>@player.Rounds[i].CurrentSummary</div></td>
-                    }
-                </tr>
-            }
-            @for (int i = 0; i < rowCount; i++) {
-                <tr>
-                    <th>@(rowCount - i)</th>
-                    @foreach (var player in players) {
-                        //<td><div contenteditable>@player.Rounds[i].Order</div></td>
-                        //<td><div contenteditable>@player.Rounds[i].CurrentSummary</div></td> 
-                        <td><input style="width:25px;" @bind="player.Rounds[i].Order" /></td>
-                        <td><input style="width:25px;" @bind="player.Rounds[i].Trick" /></td>
-                        <td><div contenteditable>@player.Rounds[i].CurrentSummary</div></td>                   }
-                </tr>
-            }
-            
         </tbody>
 </table>
 
 @code {
+    const string cssClassEnabled = "form-control";
+    const string cssClassDisabled = "form-control-plaintext";
+    string cssClass = cssClassDisabled;
+    [Parameter]
+    public string CssClass
+    {
+        get => cssClass;
+        set
+        {
+            if (cssClass == value)
+                return;
+            this.cssClass = value;
+            StateHasChanged();
+        }
+    }
+
     private int rowCount;
     private List<Player> players;
+    const int cardsCount = 54;
 
     protected override void OnInitialized()
     {
@@ -70,24 +61,19 @@
             new Player() { Name = "Name 4" }
         };
 
-        rowCount = Convert.ToInt32(Math.Floor(Convert.ToDouble(54 / players.Count)));
-
-        foreach(var player in players){
-            player.Rounds = new List<PlayerRound>();
-            for (int i = 0; i < rowCount; i++) {
-                player.Rounds.Add(new PlayerRound(player.Summary));
-            }
-        }
+        GenerateRounds();
     }
 
-    private void AddPlayer() {
+    private void AddPlayer()
+    {
         players.Add(new Player() { Name = "Name " + (players.Count() + 1) });
-        rowCount = Convert.ToInt32(Math.Floor(Convert.ToDouble(54 / players.Count)));
-                foreach(var player in players){
-            player.Rounds = new List<PlayerRound>();
-            for (int i = 0; i < rowCount; i++) {
-                player.Rounds.Add(new PlayerRound(player.Summary));
-            }
+        GenerateRounds();
+    }
+
+    void GenerateRounds() {
+        foreach (var player in players) {
+            RoundGenerator roundGenerator = new RoundGenerator();
+            player.Rounds = roundGenerator.Generate(players.Count);
         }
     }
 }
