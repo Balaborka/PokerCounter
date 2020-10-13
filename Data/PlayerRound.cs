@@ -5,42 +5,44 @@ namespace Poker_Counter.Data
     public class PlayerRound
     {
         public int MaxOrder { get; set; }
-        public int Score { get; 
-        set; }
-        public int CurrentSummary { get; set; }
+        public int Score { get; set; }
+        public int? CurrentSummary { get; set; }
         public Round RoundName { get; set; }
-        int order = 0;
-        public int Order
-        {
-            get => order;
-            set { order = value; }
-        }
-        int trick;
-        public int Trick
+        public int? Order { get; set; }
+        int? trick;
+        public int? Trick
         {
             get => trick; set
             {
                 trick = value;
-                var res = Trick - Order;
-                if (RoundName == Round.Minimal)
+                if (Trick != null)
                 {
-                    if (res > 0)
-                        Score = -(res * 10);
+                    if (RoundName == Round.Minimal)
+                    {
+                        if (Trick > 0)
+                            Score = -((int)Trick * 10);
+                        else
+                            Score = 5;
+                        return;
+                    }
+                    if (RoundName == Round.Gold)
+                    {
+                        if (Trick > 0)
+                            Score = ((int)Trick * 10);
+                        else
+                            Score = -5;
+                        return;
+                    }
                     else
-                        Score = 5;
+                    {
+                        var res = (int)Trick - (int)Order;
+                        if (res < 0)
+                            Score = res * 10;
+                        else if (res > 0)
+                            Score = -(res * 5);
+                        else Score = (int)Trick * 10;
+                    }
                 }
-                if (RoundName == Round.Gold)
-                {
-                    if (res > 0)
-                        Score = (res * 10);
-                    else
-                        Score = -5;
-                }
-                if (res < 0)
-                    Score = -(res * 10);
-                else if (res > 0)
-                    Score = -(res * 5);
-                else Score = Trick * 10;
             }
         }
     }

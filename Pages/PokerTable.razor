@@ -11,23 +11,13 @@
             <tr>
                 <th></th>
                 @foreach (var player in players) {
-                    <th>#</th>
-                    <th>#</th>
-                    <td><input class="@CssClass" @bind="player.Name" /></td>
+                    <th>Trick</th>
+                    <th>Order</th>
+                    <th><input class="@CssClass" @bind="player.Name" /></th>
                 }
             </tr>
         </thead>
         <tbody>
-            @* @foreach (var round in players.First().Rounds) {
-                <tr>
-                    <th>@round.MaxOrder</th>
-                    @foreach (var player in players) {
-                        <td><input class="@CssClass" @bind="round.Order" /></td>
-                        <td><input class="@CssClass" @bind="round.Trick" /></td>
-                        <td><input class="@CssClass" @bind="round.Score" readonly="True" /></td>
-                    }
-                </tr>
-            } *@
             @for (int i = 0; i < players.First().Rounds.Count; i++) {
                 <tr>
                     <th>@players.First().Rounds[i].MaxOrder</th>
@@ -59,7 +49,6 @@
         }
     }
 
-    private int rowCount;
     private List<Player> players;
     const int cardsCount = 54;
 
