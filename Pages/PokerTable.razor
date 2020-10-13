@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var round in players.First().Rounds) {
+            @* @foreach (var round in players.First().Rounds) {
                 <tr>
                     <th>@round.MaxOrder</th>
                     @foreach (var player in players) {
@@ -27,7 +27,18 @@
                         <td><input class="@CssClass" @bind="round.Score" readonly="True" /></td>
                     }
                 </tr>
-            }
+            } *@
+            @for (int i = 0; i < players.First().Rounds.Count; i++) {
+                <tr>
+                    <th>@players.First().Rounds[i].MaxOrder</th>
+                    @foreach (var player in players) {
+                        int newIterator = i;
+                        <td><input class="@CssClass" @bind="player.Rounds[newIterator].Order" /></td>
+                        <td><input class="@CssClass" @bind="player.Rounds[newIterator].Trick" /></td>
+                        <td><input class="@CssClass" @bind="player.Rounds[newIterator].Score" readonly="True" /></td>
+                    }
+                </tr>
+            } 
         </tbody>
 </table>
 
