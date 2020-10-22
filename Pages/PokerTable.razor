@@ -11,8 +11,8 @@
             <tr>
                 <th></th>
                 @foreach (var player in players) {
-                    <th>Trick</th>
                     <th>Order</th>
+                    <th>Trick</th>
                     <th><input class="@CssClass" @bind="player.Name" /></th>
                 }
             </tr>
@@ -25,7 +25,7 @@
                         int newIterator = i;
                         <td><input class="@CssClass" @bind="player.Rounds[newIterator].Order" /></td>
                         <td><input class="@CssClass" @bind="player.Rounds[newIterator].Trick" /></td>
-                        <td><input class="@CssClass" @bind="player.Rounds[newIterator].Score" readonly="True" /></td>
+                        <td><input class="@CssClass" @bind="player.Rounds[newIterator].ResultScore" readonly="True" /></td>
                     }
                 </tr>
             } 
@@ -73,7 +73,7 @@
     void GenerateRounds() {
         foreach (var player in players) {
             RoundGenerator roundGenerator = new RoundGenerator();
-            player.Rounds = roundGenerator.Generate(players.Count);
+            player.Rounds = roundGenerator.Generate(player, players.Count);
         }
     }
 }
