@@ -72,8 +72,8 @@
 
     void GenerateRounds() {
         foreach (var player in players) {
-            RoundGenerator roundGenerator = new RoundGenerator();
-            player.Rounds = roundGenerator.Generate(player, players.Count);
+            RoundGenerator roundGenerator = new RoundGenerator(player);
+            player.Rounds = roundGenerator.Generate(players.Count);
         }
     }
 }
