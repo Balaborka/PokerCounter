@@ -13,7 +13,7 @@
                 @foreach (var player in players) {
                     <th>Order</th>
                     <th>Trick</th>
-                    <th><input class="@CssClass" @bind="player.Name" /></th>
+                    <th><input onkeydown="this.style.width = ((this.value.length + 1) * 8) + 'px';" class="@CssClass" @bind="player.Name" /></th>
                 }
             </tr>
         </thead>
