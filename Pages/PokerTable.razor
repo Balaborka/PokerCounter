@@ -4,6 +4,7 @@
 @using System;
 @using System.Collections.Generic;
 
+@* <link href="../Styles/Site.css" rel="stylesheet"> *@
 <button class="btn btn-primary" @onclick="AddPlayer">+</button>
 
 <table class="table">
@@ -13,7 +14,7 @@
                 @foreach (var player in players) {
                     <th>Order</th>
                     <th>Trick</th>
-                    <th><input onkeydown="this.style.width = ((this.value.length + 1) * 8) + 'px';" class="@CssClass" @bind="player.Name" /></th>
+                    <th><input class="nameTextBox @CssClass" @bind="player.Name" /></th>
                 }
             </tr>
         </thead>
@@ -23,9 +24,9 @@
                     <th>@players.First().Rounds[i].MaxOrder</th>
                     @foreach (var player in players) {
                         int newIterator = i;
-                        <td><input class="@CssClass" @bind="player.Rounds[newIterator].Order" /></td>
-                        <td><input class="@CssClass" @bind="player.Rounds[newIterator].Trick" /></td>
-                        <td><input class="@CssClass" @bind="player.Rounds[newIterator].ResultScore" readonly="True" /></td>
+                        <td><input class="intTextBox @CssClass" @bind="player.Rounds[newIterator].Order" /></td>
+                        <td><input class="intTextBox @CssClass" @bind="player.Rounds[newIterator].Trick" /></td>
+                        <td><input class="intTextBox form-control" @bind="player.Rounds[newIterator].ResultScore" readonly="True" /></td>
                     }
                 </tr>
             } 
